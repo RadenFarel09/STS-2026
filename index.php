@@ -2,7 +2,6 @@
 session_start();
 include "koneksi.php";
 
-// PROSES CREATE (Tambah Data)
 if (isset($_POST['kirim'])) {
     $nama_pelapor   = trim($_POST['nama_pelapor']);
     $nama_fasilitas = trim($_POST['nama_fasilitas']);
@@ -11,7 +10,6 @@ if (isset($_POST['kirim'])) {
     $deskripsi      = trim($_POST['deskripsi']);
     $prioritas      = $_POST['prioritas'];
 
-    // Validasi Server-Side (Wajib di Juknis)
     if (empty($nama_pelapor) || empty($nama_fasilitas) || empty($lokasi) || empty($deskripsi)) {
         $_SESSION['pesan'] = "Gagal! Semua field wajib diisi dan tidak boleh hanya spasi.";
         $_SESSION['tipe']  = "error";
@@ -41,7 +39,6 @@ if (isset($_POST['kirim'])) {
     exit();
 }
 
-// PROSES READ (Ambil Data dengan JOIN)
 $query = $conn->query("SELECT lr.*, kf.nama_kategori FROM laporan_kerusakan lr 
                        JOIN kategori_fasilitas kf ON lr.id_kategori = kf.id_kategori 
                        ORDER BY lr.id_laporan DESC");
@@ -58,7 +55,6 @@ $query = $conn->query("SELECT lr.*, kf.nama_kategori FROM laporan_kerusakan lr
 
     <h2>Sistem Pelaporan Kerusakan Fasilitas Sekolah</h2>
 
-    <!-- MENAMPILKAN PESAN NOTIFIKASI -->
     <?php if (isset($_SESSION['pesan'])): ?>
         <div class="alert <?php echo $_SESSION['tipe']; ?>">
             <?php 

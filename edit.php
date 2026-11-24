@@ -2,7 +2,6 @@
 session_start();
 include "koneksi.php";
 
-// Pastikan ada ID di URL
 if (!isset($_GET['id'])) {
     header("Location: index.php");
     exit();
@@ -10,7 +9,6 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Ambil data lama berdasarkan ID untuk ditampilkan di form
 $stmt = $conn->prepare("SELECT * FROM laporan_kerusakan WHERE id_laporan = :id");
 $stmt->execute([':id' => $id]);
 $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,7 +20,6 @@ if (!$data) {
     exit();
 }
 
-// PROSES UPDATE DATA
 if (isset($_POST['update'])) {
     $nama_pelapor   = trim($_POST['nama_pelapor']);
     $nama_fasilitas = trim($_POST['nama_fasilitas']);
